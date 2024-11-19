@@ -12,7 +12,7 @@ namespace EjercicioRepaso
         {
             InitializeComponent();
         }
-        Agencia a; //Creo la ruta donde se va alamcenar mi objeto "COntenedor".
+        Agencia a = null; //Creo la ruta donde se va alamcenar mi objeto "COntenedor".
         string path = Application.StartupPath + "\\Agencia.dat";
         #region Persistencia
         private void Form1_Load(object sender, EventArgs e)//Este es el evento de carga de la aplicacion.
@@ -26,14 +26,15 @@ namespace EjercicioRepaso
                     BinaryFormatter bf = new BinaryFormatter();//Creo el bf para hacer la deserializacion.
                     a = bf.Deserialize(fs) as Agencia;//Casteo el fs para que sea una agencia el objeto que me devuelva.
                 }
-                else if (a == null) //Caso contrario consulto si a esta vacio es decir As devuelve nulo xq el fs esta vacio.
-                {                  //Solo pasa si es la primera vez que se ejecuta el codigo o si alguien borra el archivo o su contenido.
-                    a = new Agencia();//Creo la agencia 
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
             finally //Pongo un bloque finally donde cierro fs.
             {
                 if (fs != null) fs.Close();//Me aseguro que fs tenga algo para poder cerrarlo. 
+                if (a == null) a = new Agencia();//Creo la agencia en caso de que el as devuelva nulo.
             }
         }
 
@@ -165,17 +166,16 @@ namespace EjercicioRepaso
                 StreamWriter sw = null;//Como hacia en la persistencia.
                 try
                 {
-                    fs = new FileStream(ruta,FileMode.OpenOrCreate, FileAccess.Read);
+                    fs = new FileStream(ruta, FileMode.OpenOrCreate, FileAccess.Read);
                     StreamReader sr = new StreamReader(fs);//En este caso es de lectura por que voy a sacar datos.
                     string linea = sr.ReadLine();//Leo la primera linea que seria las "etiquetas".
+                    string[] campos = null;
                     while (sr.EndOfStream==false)//Utilizo un while que se va a ejecutar siempre y cuando no llegue al final del archivo.
                     {
                         linea = sr.ReadLine();//Leo las suiente linea.
-                        string[] campos = linea.Split(';');//La separo para obtener los datos del objeto.
-
+                        campos = linea.Split(';');//La separo para obtener los datos del objeto.
                         string nroPantente = campos[0];//Obtengo la patente y el dni.
                         string dniDueño = campos[1];
-
                         a.AgregarVehiculo(nroPantente, dniDueño);//Se los paso a este metodo para no cargarme el encapsulamiento.
                     }
                 }

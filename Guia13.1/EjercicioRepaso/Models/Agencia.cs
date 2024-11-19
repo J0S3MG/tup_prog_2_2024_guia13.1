@@ -24,7 +24,7 @@ namespace EjercicioRepaso.Models
                 ListaV.Sort();
                 Vehiculo v = new Vehiculo(null,patente);
                 int idx = ListaV.BinarySearch(v);
-                if (idx != -1)// Si la busqueda devuelve distinto de -1. 
+                if (idx >= 0)// Si la busqueda devuelve 0 o mas. 
                     return ListaV[idx];//retorno el valor almacenado en esa pocision.
                 return null;//Sino retorno null xq no lo encotro quiere decir que no existe.
             }
