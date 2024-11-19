@@ -28,7 +28,7 @@ namespace EjercicioRepaso
                 }
                 else if (a == null) //Caso contrario consulto si a esta vacio es decir As devuelve nulo xq el fs esta vacio.
                 {                  //Solo pasa si es la primera vez que se ejecuta el codigo o si alguien borra el archivo o su contenido.
-                     a = new Agencia();//Creo la agencia 
+                    a = new Agencia();//Creo la agencia 
                 }
             }
             finally //Pongo un bloque finally donde cierro fs.
@@ -80,10 +80,10 @@ namespace EjercicioRepaso
                 #endregion
                 #region Caso Cliente
                 else if (rbnCliente.Checked)//Chequeamos que hagan click en el segundo radiobuton.
-                {  
+                {
                     string dni = tbxDNI.Text;//Leemos el texbox
                     int tipo = cbxTipo.SelectedIndex+1;//SelectedIndex retorna 0 asi que sumamos 1 para cumplir con el enunciado.
-                    turno = new Cliente(dni,tipo);//Creamos el ticket de cliente. //(1- Auto, 2-Moto, 3- Equipo de trabajo,4- Bicicleta).
+                    turno = new Cliente(dni, tipo);//Creamos el ticket de cliente. //(1- Auto, 2-Moto, 3- Equipo de trabajo,4- Bicicleta).
                     tbxDNI.Clear();//Limpiamos el texbox.
                 }
                 else
@@ -123,6 +123,69 @@ namespace EjercicioRepaso
             }
         }
         #endregion
+        #region Caso Exportar Tickets
+        private void btnExportar_Click(object sender, EventArgs e)
+        {   //Creo la ventana modal para la exportacion.
+            SaveFileDialog ex = new SaveFileDialog();// Si lo creo aca no hace falta que lo agregue en el diseño.
+            ex.Filter = "fichero csv |*.csv";//Le añado un filtro.
+            if (ex.ShowDialog() == DialogResult.OK)//Abro la ventana.
+            {
+                string ruta = ex.FileName;//Obtengo la ruta donde voy a guardar el csv.
+                FileStream fs = null;//Creo ambas variables nulas. 
+                StreamWriter sw = null;//Como hacia en la persistencia.
+                try
+                {
+                    fs = new FileStream(ruta, FileMode.OpenOrCreate, FileAccess.Write);
+                    sw = new StreamWriter(fs);//En este caso es de escritura por que voy a meter datos.
+                    string linea = "TIPO:DENUNCIA;NroTicket;Fecha;Patente";//Creo la primera linea con las "Etiquetas".
+                    sw.WriteLine(linea);//La cargo en el archivo.
+                    foreach (Ticket t in a.RetornoLaListaPrivada())//Hago un foreach aunque tmb puedo hacer un for.
+                    {                                            //Con el for utilizaria un indexador que debuelva tickets.
+                        linea = t.ToString();//Utilizo el ToString que hice antes para cargar los datos en el archivo.
+                        sw.WriteLine(linea);//Cargo la linea actualizada en el archivo.
+                    }
+                }
+                finally
+                {
+                    if (sw != null) sw.Close();//Cierro ambos recursos importante el orden de cierre.
+                    if (fs != null) fs.Close();
+                }
+            }
+        }
+        #endregion
+        #region Caso Importar Vehiculos
+        private void btnImportar_Click(object sender, EventArgs e)
+        {   //Creo la ventana modal para la exportacion.
+            OpenFileDialog imp = new OpenFileDialog();// Si lo creo aca no hace falta que lo agregue en el diseño.
+            imp.Filter = "fichero csv |*.csv";//Le añado un filtro.
+            if (imp.ShowDialog() == DialogResult.OK)//Abro la ventana.
+            {
+                string ruta = imp.FileName;//Obtengo la ruta donde voy a guardar el csv.
+                FileStream fs = null;//Creo ambas variables nulas. 
+                StreamWriter sw = null;//Como hacia en la persistencia.
+                try
+                {
+                    fs = new FileStream(ruta,FileMode.OpenOrCreate, FileAccess.Read);
+                    StreamReader sr = new StreamReader(fs);//En este caso es de lectura por que voy a sacar datos.
+                    string linea = sr.ReadLine();//Leo la primera linea que seria las "etiquetas".
+                    while (sr.EndOfStream==false)//Utilizo un while que se va a ejecutar siempre y cuando no llegue al final del archivo.
+                    {
+                        linea = sr.ReadLine();//Leo las suiente linea.
+                        string[] campos = linea.Split(';');//La separo para obtener los datos del objeto.
 
+                        string nroPantente = campos[0];//Obtengo la patente y el dni.
+                        string dniDueño = campos[1];
+
+                        a.AgregarVehiculo(nroPantente, dniDueño);//Se los paso a este metodo para no cargarme el encapsulamiento.
+                    }
+                }
+                finally
+                {
+                    if (sw != null) sw.Close();//Cierro ambos recursos importante el orden de cierre.
+                    if (fs != null) fs.Close();
+                }
+            }
+        }
+        #endregion
     }
 }

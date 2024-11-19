@@ -37,6 +37,8 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.btnAtenderC = new System.Windows.Forms.Button();
             this.btnAtenderD = new System.Windows.Forms.Button();
+            this.btnExportar = new System.Windows.Forms.Button();
+            this.btnImportar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbxDNI
@@ -61,6 +63,11 @@
             "Equipo de trabajo",
             "Bicicleta"});
             this.cbxTipo.FormattingEnabled = true;
+            this.cbxTipo.Items.AddRange(new object[] {
+            "Auto",
+            "Moto",
+            "Equipo de Trabajo",
+            "Bicicleta"});
             this.cbxTipo.Location = new System.Drawing.Point(124, 120);
             this.cbxTipo.Name = "cbxTipo";
             this.cbxTipo.Size = new System.Drawing.Size(184, 24);
@@ -127,11 +134,33 @@
             this.btnAtenderD.UseVisualStyleBackColor = true;
             this.btnAtenderD.Click += new System.EventHandler(this.btnAtenderD_Click);
             // 
+            // btnExportar
+            // 
+            this.btnExportar.Location = new System.Drawing.Point(420, 171);
+            this.btnExportar.Name = "btnExportar";
+            this.btnExportar.Size = new System.Drawing.Size(112, 82);
+            this.btnExportar.TabIndex = 9;
+            this.btnExportar.Text = "Exportar Tickets";
+            this.btnExportar.UseVisualStyleBackColor = true;
+            this.btnExportar.Click += new System.EventHandler(this.btnExportar_Click);
+            // 
+            // btnImportar
+            // 
+            this.btnImportar.Location = new System.Drawing.Point(420, 279);
+            this.btnImportar.Name = "btnImportar";
+            this.btnImportar.Size = new System.Drawing.Size(112, 82);
+            this.btnImportar.TabIndex = 10;
+            this.btnImportar.Text = "Importar Vehiculo";
+            this.btnImportar.UseVisualStyleBackColor = true;
+            this.btnImportar.Click += new System.EventHandler(this.btnImportar_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 708);
+            this.ClientSize = new System.Drawing.Size(550, 417);
+            this.Controls.Add(this.btnImportar);
+            this.Controls.Add(this.btnExportar);
             this.Controls.Add(this.btnAtenderD);
             this.Controls.Add(this.btnAtenderC);
             this.Controls.Add(this.listBox1);
@@ -161,6 +190,8 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button btnAtenderC;
         private System.Windows.Forms.Button btnAtenderD;
+        private System.Windows.Forms.Button btnExportar;
+        private System.Windows.Forms.Button btnImportar;
     }
 }
 

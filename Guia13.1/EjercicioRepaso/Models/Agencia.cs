@@ -54,5 +54,21 @@ namespace EjercicioRepaso.Models
             }
             return t;//retornamos el valor eliminado para poder eliminarlo del listBox.
         }
+        public List<Ticket> RetornoLaListaPrivada()//Hice este metodo para poder usar el foreach.
+        {//Necesito que me retorne la lista xq al ser privada no puedo acceder a ella.
+            return ListaAt;
+        }
+        
+        public void AgregarVehiculo(string nroPantente, string dniDueño)//A este método lo nececito! para la importación.
+        {
+            Vehiculo nuevo = this[nroPantente];//Me fijo que el vehiculo no exista.
+
+            if (nuevo == null)//Si no existe lo creo y lo agrego a la lista.
+            {
+                Cliente cliente = new Cliente(dniDueño,0);
+                nuevo = new Vehiculo(cliente,nroPantente);
+                ListaV.Add(nuevo);
+            }
+        }
     }
 }
