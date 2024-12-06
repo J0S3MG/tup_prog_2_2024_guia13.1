@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Parcial_2.Models
 {
+    [Serializable]
     public class Comercio
     {
         Queue<Pago> pagos = new Queue<Pago>();
@@ -15,11 +13,11 @@ namespace Parcial_2.Models
 
         public void AgregarTicket(Ticket turno)
         {
-            if(turno is Cliente c)
+            if (turno is Cliente c)
             {
                 clientes.Enqueue(c);
             }
-            else if(turno is Pago p)
+            else if (turno is Pago p)
             {
                 pagos.Enqueue(p);
             }
@@ -28,14 +26,14 @@ namespace Parcial_2.Models
         public Ticket AtenderTicket(int tipo)
         {
             Ticket atendido = null;
-            if(tipo == 1)
+            if (tipo == 1)
             {
-                if(clientes.Count >= 0)
+                if (clientes.Count >= 0)
                     atendido = clientes.Dequeue();
             }
-            else if(tipo == 2)
+            else if (tipo == 2)
             {
-                if(pagos.Count >= 0)
+                if (pagos.Count >= 0)
                     atendido = pagos.Dequeue();
             }
             return atendido;
@@ -47,23 +45,18 @@ namespace Parcial_2.Models
             int idx = ctaCtes.BinarySearch(busq);
             if (idx >= 0)
                 return ctaCtes[idx];
-            return null; 
+            return null;
         }
         public List<Ticket> VerAtendidos()
         {
             return atendidos;
         }
-        public CtaCte AgregarCtaCte(int nroCC, int dni)//Este metodo lo necesito para el importar.
+        public CtaCte AgregarCtaCte(int nroCC, string dni)//Este metodo lo necesito para el importar.
         {
-            CtaCte c = VerCuentaCorriente(nroCC);
-            if(c == null)
-            {
-                Cliente titular = new Cliente(dni);
-                c = new CtaCte(nroCC, titular);
-                ctaCtes.Add(c);
-                return c;
-            }
-            return null;
+            Cliente titular = new Cliente(dni);
+            CtaCte c = new CtaCte(nroCC, titular);
+            ctaCtes.Add(c);
+            return c;
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Parcial_2.Models
 {
+    [Serializable]
     public class Pago: Ticket
     {
         static int nroInicio;

@@ -7,19 +7,13 @@ using System.Threading.Tasks;
 
 namespace Parcial_2.Models
 {
+    [Serializable]
     public class Cliente: Ticket
     {
         static int nroInicio;
-        int dni;
+        public int dni;
         public Cliente() { }
-        public Cliente(int dni) 
-        {
-            if (dni <= 3000000 || dni >= 45000000)
-            {
-                throw new DNIException();
-            }
-            this.dni = dni;
-        }
+        
         public Cliente(string dni)
         {
             #region Hago el manejo de la excepcion.
@@ -40,15 +34,16 @@ namespace Parcial_2.Models
             #endregion
             nroOrden = nroInicio++;
         }
-        public int VerDni()
+        public string VerDni()
         {
-            return this.dni;
+            return dni.ToString();
         }
         public override void Leer(string linea)
         {
             //(Nro;dni;saldo).
             string[] dat = linea.Split(';');
             int dni = Convert.ToInt32(dat[1]);
+            this.dni = dni;
         }
         public override string Escribir()
         {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Parcial_2.Models
 {
+    [Serializable]
     public abstract class Ticket: IExportable
     {
         protected int nroOrden;

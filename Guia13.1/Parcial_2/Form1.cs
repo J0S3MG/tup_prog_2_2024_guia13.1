@@ -27,6 +27,10 @@ namespace Parcial_2
                     BinaryFormatter bf = new BinaryFormatter();
                     liam = bf.Deserialize(fs) as Comercio;
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 finally
                 {
                     if (fs != null) fs.Close();
@@ -57,17 +61,17 @@ namespace Parcial_2
         {
             try
             {
-                string dni = tbxDNI.Text;
-                int nroCC = Convert.ToInt32(tbxNroCtaCte.Text);
                 Ticket turno = null;
                 if (cbxNroCtaCte.Checked)
                 {
+                    int nroCC = Convert.ToInt32(tbxNroCtaCte.Text);
                     CtaCte c = liam.VerCuentaCorriente(nroCC);
                     if (c != null)
                         turno = new Pago(c);
                 }
                 else
                 {
+                    string dni = tbxDNI.Text;
                     turno = new Cliente(dni);
                 }
                 liam.AgregarTicket(turno);
@@ -156,6 +160,7 @@ namespace Parcial_2
                         Ticket turno = atendidos[i];
                         sw.WriteLine($"{turno.Escribir()}");
                     }
+                    MessageBox.Show("Exportacion hecha correctamente");
                 }
                 finally
                 {

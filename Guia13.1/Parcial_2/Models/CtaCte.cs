@@ -2,6 +2,7 @@
 
 namespace Parcial_2.Models
 {
+    [Serializable]
     public class CtaCte : IExportable, IComparable
     {
         private int nroCtaCte;
@@ -39,9 +40,8 @@ namespace Parcial_2.Models
         public void Leer(string linea)
         {   //(Nro;dni;saldo).
             string[] dat = linea.Split(';');
-            int nro = Convert.ToInt32(dat[0]);
-            CtaCte c = new CtaCte(nro, null);
-            c.saldo = Convert.ToDouble(dat[2]);
+            nroCtaCte = Convert.ToInt32(dat[0]);
+            saldo = Convert.ToDouble(dat[2]);
         }
         public string Escribir()
         {
