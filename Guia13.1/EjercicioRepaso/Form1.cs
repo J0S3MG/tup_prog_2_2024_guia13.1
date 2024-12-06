@@ -138,7 +138,7 @@ namespace EjercicioRepaso
                 {
                     fs = new FileStream(ruta, FileMode.OpenOrCreate, FileAccess.Write);
                     sw = new StreamWriter(fs);//En este caso es de escritura por que voy a meter datos.
-                    string linea = "TIPO:DENUNCIA;NroTicket;Fecha;Patente";//Creo la primera linea con las "Etiquetas".
+                    string linea = "Tipo;NroTicket;Fecha;Patente";//Creo la primera linea con las "Etiquetas".
                     sw.WriteLine(linea);//La cargo en el archivo.
                     foreach (Ticket t in a.RetornoLaListaPrivada())//Hago un foreach aunque tmb puedo hacer un for.
                     {                                            //Con el for utilizaria un indexador que debuelva tickets.

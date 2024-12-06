@@ -8,7 +8,7 @@ namespace EjercicioRepaso.Models
 {
     public class DNIException: ApplicationException//Creo mi excepcion personalizada
     {
-        public DNIException() { }
+        public DNIException(): base("Error al ingresar el DNI") { }
         public DNIException(string message) : base(message) { }
         public DNIException(string msj,Exception e): base(msj,e){ }
     }
