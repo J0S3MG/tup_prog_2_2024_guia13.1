@@ -119,13 +119,9 @@ namespace Parcial_2
                     while (sr.EndOfStream == false)
                     {
                         linea = sr.ReadLine();
-                        CtaCte c = new CtaCte();
-                        c.Leer(linea);
-                        Cliente titular = new Cliente();
-                        titular.Leer(linea);
-                        CtaCte cuenta = liam.AgregarCtaCte(c.VerNro(), titular.VerDni());
-                        MessageBox.Show("La Cuenta se agrego correctamente: "+ cuenta.ToString());
-                    } 
+                        liam.Leer(linea);
+                    }
+                    MessageBox.Show("Las Cuentas se agregaron correctamente");
                 }
                 catch (DNIException ex)
                 {
@@ -154,11 +150,10 @@ namespace Parcial_2
                     fs = new FileStream(ruta, FileMode.OpenOrCreate, FileAccess.Write);
                     sw = new StreamWriter(fs);
                     sw.WriteLine("tipo;numero;dni;ctaCte");
-                    List<Ticket> atendidos = liam.VerAtendidos();
-                    for(int i = 0; i < atendidos.Count; i++)
+                    for(int i = 0; i < liam.CantAtendidos; i++)
                     {
-                        Ticket turno = atendidos[i];
-                        sw.WriteLine($"{turno.Escribir()}");
+                        string linea = liam.Escribir();
+                        sw.WriteLine($"{linea}");
                     }
                     MessageBox.Show("Exportacion hecha correctamente");
                 }

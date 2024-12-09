@@ -4,13 +4,19 @@ using System.Collections.Generic;
 namespace Parcial_2.Models
 {
     [Serializable]
-    public class Comercio
+    public class Comercio: IExportable
     {
         Queue<Pago> pagos = new Queue<Pago>();
         Queue<Cliente> clientes = new Queue<Cliente>();
         List<Ticket> atendidos = new List<Ticket>();
         List<CtaCte> ctaCtes = new List<CtaCte>();
-
+        public int CantAtendidos
+        {
+            get
+            {
+                return atendidos.Count;
+            }
+        }
         public void AgregarTicket(Ticket turno)
         {
             if (turno is Cliente c)
@@ -57,6 +63,23 @@ namespace Parcial_2.Models
             CtaCte c = new CtaCte(nroCC, titular);
             ctaCtes.Add(c);
             return c;
+        }
+        public string Escribir()
+        {
+            for (int i = 0; i < atendidos.Count; i++)
+            {
+                Ticket turno = atendidos[i];
+                return turno.Escribir();
+            }
+            return null;
+        }
+        public void Leer(string linea)
+        {
+            CtaCte c = new CtaCte();
+            c.Leer(linea);
+            Cliente titular = new Cliente();
+            titular.Leer(linea);
+            CtaCte cuenta = AgregarCtaCte(c.VerNro(), titular.VerDni());
         }
     }
 }
